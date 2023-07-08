@@ -1,0 +1,10 @@
+D:\mracus\ChessProjectNEA\ChessProjectNEA\bin\Debug\ChessProjectNEA.exe.config
+D:\mracus\ChessProjectNEA\ChessProjectNEA\bin\Debug\ChessProjectNEA.exe
+D:\mracus\ChessProjectNEA\ChessProjectNEA\bin\Debug\ChessProjectNEA.pdb
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.csproj.AssemblyReference.cache
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.Properties.Resources.resources
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.csproj.GenerateResource.cache
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.csproj.CoreCompileInputs.cache
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.exe
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.pdb
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.ChessForm.resources
