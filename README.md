@@ -1,2 +1,2 @@
 # Chess
-My Chess project but in C# wooo
+My Chess project but in C#
