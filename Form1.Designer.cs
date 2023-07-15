@@ -29,14 +29,13 @@ namespace ChessProjectNEA
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ChessForm));
             this.SuspendLayout();
             // 
             // ChessForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
+            this.BackgroundImage = global::ChessProjectNEA.Properties.Resources.chessboard;
             this.ClientSize = new System.Drawing.Size(800, 799);
             this.MaximumSize = new System.Drawing.Size(816, 838);
             this.MinimumSize = new System.Drawing.Size(816, 838);

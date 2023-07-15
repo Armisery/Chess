@@ -128,7 +128,7 @@ namespace ChessProjectNEA
                 {
                     string coordstring = i.ToString() + j.ToString();
                     ((Button)Controls.Find("Button" + coordstring, true)[0]).FlatAppearance.MouseOverBackColor = Color.Transparent;
-                    ((Button)Controls.Find("Button" + coordstring, true)[0]).FlatAppearance.MouseDownBackColor = Color.Red;
+                    ((Button)Controls.Find("Button" + coordstring, true)[0]).FlatAppearance.MouseDownBackColor = Color.Aqua;
                     ((Button)Controls.Find("Button" + coordstring, true)[0]).Click += new EventHandler(NewButton_Click);
                 }
             }
@@ -150,15 +150,21 @@ namespace ChessProjectNEA
                 Currentlyselected = coordstring;
                 btn.BackColor = Color.Blue;
                 btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+                pieceselected(piecename, coordstring);
             } else if (piecename!=""&&Currentlyselected!="")
             {
                 if (piececolour==dictionaries.getPieceColourWithCoordString(Currentlyselected))
                 {
+                    //Selecting different piece
                     ((Button)Controls.Find("Button" + Currentlyselected, true)[0]).BackColor = Color.Transparent;
                     ((Button)Controls.Find("Button" + Currentlyselected, true)[0]).FlatAppearance.MouseOverBackColor = Color.Transparent;
                     Currentlyselected = coordstring;
                     btn.BackColor = Color.Blue;
                     btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+                    pieceselected(piecename, coordstring);
+                } else
+                {
+                    //Trying to take a piece. Check if move is viable.
                 }
 
                 //MessageBox.Show("Are you trying to take the " + piecename + " on " + coordstring + " with your " + dictionaries.getPieceWithCoordString(Currentlyselected));
@@ -175,6 +181,53 @@ namespace ChessProjectNEA
         {
             get { return currentlyselected; }
             set { currentlyselected = value; }
+        }
+
+        private void highlight_poss(List<(int i, int j)> possiblemoves, string coordstring)
+        {
+            int currenti = (int)char.GetNumericValue(coordstring[0]);
+            int currentj = (int)char.GetNumericValue(coordstring[1]);
+            //This function is made to highlight possible moves that can be done. Not sure how I intend to undo this later but ah well.
+            foreach ((int i, int j) in possiblemoves)
+            {
+                int attempti = currenti + i;
+                int attemptj = currenti + j;
+                string possiblemove = attempti.ToString() + attemptj.ToString();
+                ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.Blue;
+                ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor= Color.Blue;
+            }
+        }
+
+        private void pieceselected(string piecename,string coordstring)
+        {
+            if (piecename =="whiteknight" || piecename=="blackknight")
+            {
+                int i = (int)char.GetNumericValue(coordstring[0]);
+                int j = (int)char.GetNumericValue(coordstring[1]);
+                MessageBox.Show(i.ToString() + j.ToString());
+                List<(int i,int j)> possiblemoves = new List<(int i, int j)> ();
+                if (i > 1)
+                {
+                    if (j > 0) { possiblemoves.Add((-2,-1)); }
+                    if (j < 7) { possiblemoves.Add((-2,1)); }
+                }
+                if (i < 6)
+                {
+                    if (j > 0) { possiblemoves.Add((2, -1)); }
+                    if (j < 7) { possiblemoves.Add((2, 1)); }
+                }
+                if (j > 1)
+                {
+                    if (i > 0) { possiblemoves.Add((-1, -2)); }
+                    if (i < 6) { possiblemoves.Add((1, -2)); }
+                }
+                if (j < 6)
+                {
+                    if (i > 0) { possiblemoves.Add((-1, 2)); }
+                    if (i < 6) { possiblemoves.Add((1, 2)); }
+                }
+                //highlight_poss(possiblemoves,coordstring);
+            }
         }
 
         private void ChessForm_Load(object sender, EventArgs e)
