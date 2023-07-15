@@ -257,6 +257,7 @@ namespace ChessProjectNEA
             }
             else if (pieceabbrev == "WP" || pieceabbrev == "BP")
             {
+                //MessageBox.Show(curi.ToString() + curj.ToString());
                 idiff = curi - i;
                 jdiff = curj - j;
                 if (piececolour != colour)
@@ -277,6 +278,12 @@ namespace ChessProjectNEA
                         {
                             return false;
                         }
+                        else if (jdiff == -2)
+                        {
+                            if (idiff != 0) { return false; }
+                            if (curj==1) { return true; }
+                            else { return false; }
+                        }
                         else
                         {
                             return false;
@@ -294,9 +301,20 @@ namespace ChessProjectNEA
                     }
                     else
                     {
-                        //Will need to adjust this for first move. For now shh
-                        if (jdiff > 1) { return false; };
+                        if (jdiff == 1) { return true; }
                         if (jdiff < 0) { return false; }
+                        if (jdiff>2) { return false; }
+                        if (jdiff==2)
+                        {
+                            if (curj==6)
+                            {
+                                return true;
+                            }
+                            else
+                            {
+                                 return false;
+                            }
+                        }
                     }
                     
                     return true;
@@ -356,6 +374,10 @@ namespace ChessProjectNEA
                     if (i < 7) { possiblemoves.Add((1, 2)); }
                 }
                 highlight_poss(possiblemoves,coordstring);
+            } 
+            else if (piecename=="whitepawn"|| piecename =="blackpawn")
+            {
+
             }
         }
 
