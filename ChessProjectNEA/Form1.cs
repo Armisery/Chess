@@ -184,6 +184,23 @@ namespace ChessProjectNEA
             if (num==0) { colour = "white"; }
             else { colour = "black"; }
             currentlyselected = "";
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    var b = new Button();
+                    b.Text = "";
+                    b.Name=string.Format("Button{0}{1}",i,j);
+                    //MessageBox.Show(b.Name);
+                    b.Size = new Size(100, 100);
+                    b.Location = new Point((i*100),(j*100));
+                    b.Visible = true;
+                    b.FlatStyle = FlatStyle.Flat;
+                    b.BackColor = Color.Transparent;
+                    b.BringToFront();
+                    Controls.Add(b);
+                }
+            }
             initializeDict();
             setImages();
             initializeButtonConfig();
