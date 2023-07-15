@@ -8,3 +8,4 @@ D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.csproj.CoreC
 D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.exe
 D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.pdb
 D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.ChessForm.resources
+D:\mracus\ChessProjectNEA\ChessProjectNEA\obj\Debug\ChessProjectNEA.csproj.SuggestedBindingRedirects.cache
