@@ -113,8 +113,10 @@ namespace ChessProjectNEA
                         object obj = Properties.Resources.ResourceManager.GetObject(piecename);
                         Image image = (Bitmap)obj;
                         ((Button)Controls.Find("Button" + coordstring, true)[0]).Image = image;
+                    } else
+                    {
+                        ((Button)Controls.Find("Button" + coordstring, true)[0]).Image = null;
                     }
-
                 }
             }
             return;
@@ -133,14 +135,14 @@ namespace ChessProjectNEA
                 }
             }
         }
-        private void NewButton_Click(object sender, EventArgs e)
+        private void clearUnselected()
         {
-            for (int x=0;x< 8;x++)
+            for (int x = 0; x < 8; x++)
             {
-                for (int y= 0;y< 8;y++)
+                for (int y = 0; y < 8; y++)
                 {
-                    string buttonname="Button"+x.ToString()+y.ToString();
-                    if (Currentlyselected!= x.ToString() + y.ToString())
+                    string buttonname = "Button" + x.ToString() + y.ToString();
+                    if (Currentlyselected != x.ToString() + y.ToString())
                     {
                         Button button = (Button)Controls.Find(buttonname, true)[0];
                         button.FlatAppearance.MouseOverBackColor = Color.Transparent;
@@ -148,6 +150,10 @@ namespace ChessProjectNEA
                     }
                 }
             }
+        }
+        private void NewButton_Click(object sender, EventArgs e)
+        {
+            clearUnselected();
             Button btn = (Button)sender;
             string name = btn.Name;
             string coordstring = name.Substring(6);
@@ -178,17 +184,73 @@ namespace ChessProjectNEA
                 } else
                 {
                     //Trying to take a piece. Check if move is viable.
+                    bool moveisviable = Viable(coordstring);
+                    //MessageBox.Show(moveisviable.ToString());
+                    Button button = (Button)Controls.Find("Button" + Currentlyselected, true)[0];
+                    button.BackColor = Color.Transparent;
+                    button.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                    if (moveisviable)
+                    {
+                        move(i, j);
+                    }
                 }
 
                 //MessageBox.Show("Are you trying to take the " + piecename + " on " + coordstring + " with your " + dictionaries.getPieceWithCoordString(Currentlyselected));
             } else if (piecename == "" && Currentlyselected != "")
             {
                 //Selected a blank button, but already got a piece selected. Check if move can be done
-                //MessageBox.Show("Are you trying to move to " + coordstring + " with your " + dictionaries.getPieceWithCoordString(Currentlyselected));
+                if (Viable(coordstring))
+                {
+                    move(i, j);
+                } else
+                {
+                    Button button = (Button)Controls.Find("Button" + Currentlyselected, true)[0];
+                    button.BackColor = Color.Transparent;
+                    button.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                }
             } else
             {
                 //Selected blank, nothing in currently selected. Do nothing
             }
+        }
+        private void move(int i, int j)
+        {
+            dictionaries.setBoard(i, j, dictionaries.getPieceAbbrevWithCoordString(Currentlyselected));
+            int currentlyi = (int)char.GetNumericValue(Currentlyselected[0]);
+            int currentlyj = (int)char.GetNumericValue(Currentlyselected[1]);
+            Currentlyselected = "";
+            dictionaries.setBoard(currentlyi, currentlyj, "");
+            setImages();
+            clearUnselected();
+        }
+        private bool Viable(string coordstring)
+        {
+            bool viable = true;
+            string pieceabbrev = dictionaries.getPieceAbbrevWithCoordString(Currentlyselected);
+            int i = (int)char.GetNumericValue(coordstring[0]);
+            int j = (int)char.GetNumericValue(coordstring[1]);
+            int curi = (int)char.GetNumericValue(Currentlyselected[0]);
+            int curj = (int)char.GetNumericValue(Currentlyselected[1]);
+            int idiff = Math.Abs(i - curi);
+            int jdiff = Math.Abs(j - curj);
+            //MessageBox.Show(idiff.ToString() + jdiff.ToString());
+            if (pieceabbrev=="WH" || pieceabbrev=="BH")
+            {
+                if (idiff == 2)
+                {
+                    if (jdiff != 1) { return false; } 
+                    else { return true; }
+                }
+                else if (idiff == 1)
+                {
+                    if (jdiff != 2) { return false; }
+                    else { return true; }
+                } else
+                {
+                    return false;
+                }
+            }
+            return viable;
         }
         private string Currentlyselected
         {
@@ -206,8 +268,11 @@ namespace ChessProjectNEA
                 int newi = curpossiblemove.Item1 + currenti;
                 int newj = curpossiblemove.Item2 + currentj;
                 string possiblemove = newi.ToString() + newj.ToString();
-                ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.BlueViolet;
-                ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor = Color.BlueViolet;
+                if (dictionaries.getPieceColourWithCoordString(possiblemove) != dictionaries.getPieceColourWithCoordString(Currentlyselected))
+                {
+                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.BlueViolet;
+                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor = Color.BlueViolet;
+                }
             }
         }
 
