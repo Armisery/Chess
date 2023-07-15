@@ -135,6 +135,19 @@ namespace ChessProjectNEA
         }
         private void NewButton_Click(object sender, EventArgs e)
         {
+            for (int x=0;x< 8;x++)
+            {
+                for (int y= 0;y< 8;y++)
+                {
+                    string buttonname="Button"+x.ToString()+y.ToString();
+                    if (Currentlyselected!= x.ToString() + y.ToString())
+                    {
+                        Button button = (Button)Controls.Find(buttonname, true)[0];
+                        button.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                        button.BackColor = Color.Transparent;
+                    }
+                }
+            }
             Button btn = (Button)sender;
             string name = btn.Name;
             string coordstring = name.Substring(6);
@@ -171,7 +184,7 @@ namespace ChessProjectNEA
             } else if (piecename == "" && Currentlyselected != "")
             {
                 //Selected a blank button, but already got a piece selected. Check if move can be done
-                MessageBox.Show("Are you trying to move to " + coordstring + " with your " + dictionaries.getPieceWithCoordString(Currentlyselected));
+                //MessageBox.Show("Are you trying to move to " + coordstring + " with your " + dictionaries.getPieceWithCoordString(Currentlyselected));
             } else
             {
                 //Selected blank, nothing in currently selected. Do nothing
@@ -188,13 +201,13 @@ namespace ChessProjectNEA
             int currenti = (int)char.GetNumericValue(coordstring[0]);
             int currentj = (int)char.GetNumericValue(coordstring[1]);
             //This function is made to highlight possible moves that can be done. Not sure how I intend to undo this later but ah well.
-            foreach ((int i, int j) in possiblemoves)
+            foreach ((int i, int j) curpossiblemove in possiblemoves)
             {
-                int attempti = currenti + i;
-                int attemptj = currenti + j;
-                string possiblemove = attempti.ToString() + attemptj.ToString();
-                ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.Blue;
-                ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor= Color.Blue;
+                int newi = curpossiblemove.Item1 + currenti;
+                int newj = curpossiblemove.Item2 + currentj;
+                string possiblemove = newi.ToString() + newj.ToString();
+                ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.BlueViolet;
+                ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor = Color.BlueViolet;
             }
         }
 
@@ -204,7 +217,6 @@ namespace ChessProjectNEA
             {
                 int i = (int)char.GetNumericValue(coordstring[0]);
                 int j = (int)char.GetNumericValue(coordstring[1]);
-                MessageBox.Show(i.ToString() + j.ToString());
                 List<(int i,int j)> possiblemoves = new List<(int i, int j)> ();
                 if (i > 1)
                 {
@@ -219,14 +231,14 @@ namespace ChessProjectNEA
                 if (j > 1)
                 {
                     if (i > 0) { possiblemoves.Add((-1, -2)); }
-                    if (i < 6) { possiblemoves.Add((1, -2)); }
+                    if (i < 7) { possiblemoves.Add((1, -2)); }
                 }
                 if (j < 6)
                 {
                     if (i > 0) { possiblemoves.Add((-1, 2)); }
-                    if (i < 6) { possiblemoves.Add((1, 2)); }
+                    if (i < 7) { possiblemoves.Add((1, 2)); }
                 }
-                //highlight_poss(possiblemoves,coordstring);
+                highlight_poss(possiblemoves,coordstring);
             }
         }
 
