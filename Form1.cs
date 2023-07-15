@@ -192,6 +192,9 @@ namespace ChessProjectNEA
                     if (moveisviable)
                     {
                         move(i, j);
+                    } else
+                    {
+                        Currentlyselected = "";
                     }
                 }
 
@@ -207,6 +210,7 @@ namespace ChessProjectNEA
                     Button button = (Button)Controls.Find("Button" + Currentlyselected, true)[0];
                     button.BackColor = Color.Transparent;
                     button.FlatAppearance.MouseOverBackColor = Color.Transparent;
+                    Currentlyselected = "";
                 }
             } else
             {
@@ -227,27 +231,75 @@ namespace ChessProjectNEA
         {
             bool viable = true;
             string pieceabbrev = dictionaries.getPieceAbbrevWithCoordString(Currentlyselected);
+            string piececolour = dictionaries.getPieceColourWithCoordString(Currentlyselected);
             int i = (int)char.GetNumericValue(coordstring[0]);
             int j = (int)char.GetNumericValue(coordstring[1]);
             int curi = (int)char.GetNumericValue(Currentlyselected[0]);
             int curj = (int)char.GetNumericValue(Currentlyselected[1]);
-            int idiff = Math.Abs(i - curi);
-            int jdiff = Math.Abs(j - curj);
-            //MessageBox.Show(idiff.ToString() + jdiff.ToString());
-            if (pieceabbrev=="WH" || pieceabbrev=="BH")
+            int idiff = Math.Abs(curi-i);
+            int jdiff = Math.Abs(curj-j);
+            if (pieceabbrev == "WH" || pieceabbrev == "BH")
             {
                 if (idiff == 2)
                 {
-                    if (jdiff != 1) { return false; } 
+                    if (jdiff != 1) { return false; }
                     else { return true; }
                 }
                 else if (idiff == 1)
                 {
                     if (jdiff != 2) { return false; }
                     else { return true; }
-                } else
+                }
+                else
                 {
                     return false;
+                }
+            }
+            else if (pieceabbrev == "WP" || pieceabbrev == "BP")
+            {
+                idiff = curi - i;
+                jdiff = curj - j;
+                if (piececolour != colour)
+                {
+                    if (jdiff < 0)
+                    {
+                        if (jdiff == -1 && idiff == 0)
+                        {
+                            if (dictionaries.getPieceWithCoordString(coordstring) != "") { return false; }
+                            else { return true; }
+                        }
+                        else if (jdiff == -1 && Math.Abs(idiff) == 1)
+                        {
+                            if (dictionaries.getPieceWithCoordString(coordstring) != "") { return true; }
+                            else { return false; }
+                        }
+                        else if (jdiff == -1)
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else { return false; }
+                }
+                else
+                {
+                    if (idiff > 1) { return false; }
+                    else if (idiff == 1||idiff==-1)
+                    {
+                        if (jdiff != 1) { return false; }
+                        if (dictionaries.getPieceWithCoordString(coordstring)=="") { return false; };
+                    }
+                    else
+                    {
+                        //Will need to adjust this for first move. For now shh
+                        if (jdiff > 1) { return false; };
+                        if (jdiff < 0) { return false; }
+                    }
+                    
+                    return true;
                 }
             }
             return viable;
