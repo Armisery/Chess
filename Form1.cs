@@ -351,6 +351,7 @@ namespace ChessProjectNEA
             int i = (int)char.GetNumericValue(coordstring[0]);
             int j = (int)char.GetNumericValue(coordstring[1]);
             List<(int i, int j)> possiblemoves = new List<(int i, int j)>();
+            string piececolour = dictionaries.getPieceColourWithCoordString(Currentlyselected);
             if (piecename =="whiteknight" || piecename=="blackknight")
             {
                 if (i > 1)
@@ -376,7 +377,6 @@ namespace ChessProjectNEA
             } 
             else if (piecename=="whitepawn"|| piecename =="blackpawn")
             {
-                string piececolour = dictionaries.getPieceColourWithCoordString(Currentlyselected);
                 if (piececolour!=colour)
                 {
                     if (j==1) { possiblemoves.Add((0,2)); }
@@ -408,6 +408,45 @@ namespace ChessProjectNEA
                             if (dictionaries.getPieceWithCoords(i+1,j-1)!="") { possiblemoves.Add((1, -1)); }
                         }
                     }
+                }
+            }
+            else if (piecename=="whiterook"|| piecename == "blackrook")
+            {
+                int upwardsmax = Math.Abs(0 - j)+1;
+                int downwardsmax = Math.Abs(7 - j) + 1;
+                int leftmax = Math.Abs(0 - i) + 1;
+                int rightmax=Math.Abs(7 - i) + 1;
+                for (int x=1; x<upwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i,j-x)!=piececolour) { 
+                        possiblemoves.Add((0, -x));
+                        if (dictionaries.getPieceColourWithCoords(i, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x =1;x<downwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i, j + x) != piececolour) {
+                        possiblemoves.Add((0, x));
+                        if (dictionaries.getPieceColourWithCoords(i,j+x)!="") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i-x, j) != piececolour) { 
+                        possiblemoves.Add((-x, 0)); 
+                        if (dictionaries.getPieceColourWithCoords(i - x, j)!="") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i+x, j) != piececolour) { 
+                        possiblemoves.Add((x, 0)); 
+                        if (dictionaries.getPieceColourWithCoords(i + x, j)!="") { break; }
+                    }
+                    else { break; }
                 }
             }
             highlight_poss(possiblemoves, coordstring);
