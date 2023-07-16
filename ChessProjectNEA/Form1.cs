@@ -531,6 +531,10 @@ namespace ChessProjectNEA
                     return false;
                 }
             }
+            else if (pieceabbrev=="BK" || pieceabbrev=="WK")
+            {
+                //Havent even made this viable function yet shush
+            }
             return viable;
         }
         private string Currentlyselected
@@ -805,6 +809,41 @@ namespace ChessProjectNEA
                 }
                 #endregion
 
+            }
+            else if (piecename=="whiteking" || piecename=="blackking")
+            {
+                if (i > 0)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i - 1, j) != piececolour) { possiblemoves.Add((-1, 0)); }
+                    if (j>0)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(i - 1, j - 1) != piececolour) { possiblemoves.Add((-1, -1)); }
+                    }
+                    if (j<7)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(i - 1, j + 1) != piececolour) { possiblemoves.Add((-1, 1)); }
+                    }
+                }
+                if (i < 7)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i + 1, j) != piececolour) { possiblemoves.Add((1, 0)); }
+                    if (j>0)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(i + 1, j - 1) != piececolour) { possiblemoves.Add((1, -1)); }
+                    }
+                    if (j<7)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(i + 1, j + 1) != piececolour) { possiblemoves.Add((1, 1)); }
+                    }
+                }
+                if (j < 7)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i, j + 1) != piececolour) { possiblemoves.Add((0, 1)); }
+                }
+                if (j>0)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i, j - 1) != piececolour) { possiblemoves.Add((0, -1)); }
+                }
             }
             highlight_poss(possiblemoves, coordstring);
         }
