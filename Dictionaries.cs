@@ -83,6 +83,12 @@ namespace ChessProjectNEA
             string piecename = getPieceName(pieceabbrev);
             return piecename;
         }
+        public string getPieceWithCoords(int i, int j)
+        {
+            string pieceabbrev = getBoard(i, j);
+            string piecename = getPieceName(pieceabbrev);
+            return piecename;
+        }
         public string getPieceAbbrevWithCoordString(string coordstring)
         {
             int i = (int)char.GetNumericValue(coordstring[0]);

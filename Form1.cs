@@ -348,11 +348,11 @@ namespace ChessProjectNEA
 
         private void pieceselected(string piecename,string coordstring)
         {
+            int i = (int)char.GetNumericValue(coordstring[0]);
+            int j = (int)char.GetNumericValue(coordstring[1]);
+            List<(int i, int j)> possiblemoves = new List<(int i, int j)>();
             if (piecename =="whiteknight" || piecename=="blackknight")
             {
-                int i = (int)char.GetNumericValue(coordstring[0]);
-                int j = (int)char.GetNumericValue(coordstring[1]);
-                List<(int i,int j)> possiblemoves = new List<(int i, int j)> ();
                 if (i > 1)
                 {
                     if (j > 0) { possiblemoves.Add((-2,-1)); }
@@ -373,12 +373,44 @@ namespace ChessProjectNEA
                     if (i > 0) { possiblemoves.Add((-1, 2)); }
                     if (i < 7) { possiblemoves.Add((1, 2)); }
                 }
-                highlight_poss(possiblemoves,coordstring);
             } 
             else if (piecename=="whitepawn"|| piecename =="blackpawn")
             {
-
+                string piececolour = dictionaries.getPieceColourWithCoordString(Currentlyselected);
+                if (piececolour!=colour)
+                {
+                    if (j==1) { possiblemoves.Add((0,2)); }
+                    if (j < 7)
+                    {
+                        if (dictionaries.getPieceWithCoords(i, j + 1) == "") { possiblemoves.Add((0, 1)); }
+                    }
+                    if (i>0&&j<7)
+                    {
+                        if (dictionaries.getPieceWithCoords(i-1,j+1)!="") { possiblemoves.Add((-1, 1)); }
+                    }
+                    if (i<7&&j<7)
+                    {
+                        if (dictionaries.getPieceWithCoords(i+1,j+1)!="") { possiblemoves.Add((1,1)); }
+                    }
+                } 
+                else
+                {
+                    if (j==6) { possiblemoves.Add((0, -2)); }
+                    if (j>0)
+                    {
+                        if (dictionaries.getPieceWithCoords(i,j-1)=="") { possiblemoves.Add((0, -1)); }
+                        if (i>0)
+                        {
+                            if (dictionaries.getPieceWithCoords(i-1,j-1)!="") { possiblemoves.Add((-1, -1)); }
+                        }
+                        if (i<7)
+                        {
+                            if (dictionaries.getPieceWithCoords(i+1,j-1)!="") { possiblemoves.Add((1, -1)); }
+                        }
+                    }
+                }
             }
+            highlight_poss(possiblemoves, coordstring);
         }
 
         private void ChessForm_Load(object sender, EventArgs e)
