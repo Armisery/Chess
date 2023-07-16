@@ -500,6 +500,59 @@ namespace ChessProjectNEA
                     else { break; }
                 }
             }
+            else if (piecename=="whitebishop" || piecename == "blackbishop")
+            {
+                int upwardsmax = Math.Abs(0 - j) + 1;
+                int downwardsmax = Math.Abs(7 - j) + 1;
+                int leftmax = Math.Abs(0 - i) + 1;
+                int rightmax = Math.Abs(7 - i) + 1;
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and down
+                    if (x==downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i - x, j+x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, x));
+                        if (dictionaries.getPieceColourWithCoords(i - x, j+x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i - x, j - x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, -x));
+                        if (dictionaries.getPieceColourWithCoords(i - x, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i + x, j + x) != piececolour)
+                    {
+                        possiblemoves.Add((x, x));
+                        if (dictionaries.getPieceColourWithCoords(i + x, j + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                //This code has a bug. [Patched]
+                for (int x = 1; x < rightmax; x++)//This was set to leftmax not rightmax. This was the entire bug. This is now fixed.
+                {
+                    //This loop is for right and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i + x, j - x) != piececolour)
+                    {
+                        possiblemoves.Add((x, -x));
+                        if (dictionaries.getPieceColourWithCoords(i + x, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+
+            }
             highlight_poss(possiblemoves, coordstring);
         }
 
