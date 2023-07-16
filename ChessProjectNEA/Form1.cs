@@ -534,6 +534,47 @@ namespace ChessProjectNEA
             else if (pieceabbrev=="BK" || pieceabbrev=="WK")
             {
                 //Havent even made this viable function yet shush
+                List<(int, int)> possiblemoves = new List<(int, int)>();
+                if (curi > 0)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi - 1, curj) != piececolour) { possiblemoves.Add((-1, 0)); }
+                    if (curj > 0)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(curi - 1, curj - 1) != piececolour) { possiblemoves.Add((-1, -1)); }
+                    }
+                    if (curj < 7)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(curi - 1, curj + 1) != piececolour) { possiblemoves.Add((-1, 1)); }
+                    }
+                }
+                if (curi < 7)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi + 1, curj) != piececolour) { possiblemoves.Add((1, 0)); }
+                    if (curj > 0)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(curi + 1, curj - 1) != piececolour) { possiblemoves.Add((1, -1)); }
+                    }
+                    if (curj < 7)
+                    {
+                        if (dictionaries.getPieceColourWithCoords(curi + 1, curj + 1) != piececolour) { possiblemoves.Add((1, 1)); }
+                    }
+                }
+                if (curj < 7)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi, curj + 1) != piececolour) { possiblemoves.Add((0, 1)); }
+                }
+                if (curj > 0)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi, curj - 1) != piececolour) { possiblemoves.Add((0, -1)); }
+                }
+                if (possiblemoves.Contains(attemptedmove))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             return viable;
         }
