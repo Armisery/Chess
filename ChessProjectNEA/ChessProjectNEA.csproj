@@ -123,5 +123,44 @@
   <ItemGroup>
     <None Include="Resources\whiteknight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-horse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-king.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\board.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-bishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-castle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-horse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-king.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-pawn.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\white-queen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-bishop.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\black-castle.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

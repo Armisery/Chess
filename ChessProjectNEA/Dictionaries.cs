@@ -61,7 +61,7 @@ namespace ChessProjectNEA
         }
         public void setBoard(int x, int y,string value)
         {
-            string[] possiblevalues = new string[] { "BR", "BH", "BB", "BQ", "BK", "BP", "WR", "WH", "WB", "WQ", "WK", "WK","WP"};
+            string[] possiblevalues = new string[] { "BR", "BH", "BB", "BQ", "BK", "BP", "WR", "WH", "WB", "WQ", "WK", "WK", "WP", ""};
             if (!possiblevalues.Contains(value)) { return; }
             Board[(x, y)] = value;
         }
@@ -82,6 +82,27 @@ namespace ChessProjectNEA
             string pieceabbrev = getBoard(i, j);
             string piecename = getPieceName(pieceabbrev);
             return piecename;
+        }
+        public string getPieceWithCoords(int i, int j)
+        {
+            string pieceabbrev = getBoard(i, j);
+            string piecename = getPieceName(pieceabbrev);
+            return piecename;
+        }
+        public string getPieceColourWithCoords(int i,int j)
+        {
+            string pieceabbrev = getBoard(i,j);
+            string piecename = getPieceName(pieceabbrev);
+            if (piecename=="") { return ""; }
+            string colour = piecename.Substring(0, 5);
+            return colour;
+        }
+        public string getPieceAbbrevWithCoordString(string coordstring)
+        {
+            int i = (int)char.GetNumericValue(coordstring[0]);
+            int j = (int)char.GetNumericValue(coordstring[1]);
+            string pieceabbrev = getBoard(i, j);
+            return pieceabbrev;
         }
         public string getPieceColourWithCoordString(string coordstring)
         {
