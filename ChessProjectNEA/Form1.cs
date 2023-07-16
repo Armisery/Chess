@@ -371,6 +371,66 @@ namespace ChessProjectNEA
                     return false; 
                 }
             }
+            else if (pieceabbrev=="BB" || pieceabbrev=="WB")
+            {
+                List<(int, int)> possiblemoves = new List<(int, int)>();
+                int upwardsmax = Math.Abs(0 - curj) + 1;
+                int downwardsmax = Math.Abs(7 - curj) + 1;
+                int leftmax = Math.Abs(0 - curi) + 1;
+                int rightmax = Math.Abs(7 - curi) + 1;
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi - x, curj + x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, x));
+                        if (dictionaries.getPieceColourWithCoords(curi - x, curj + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi - x, curj - x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, -x));
+                        if (dictionaries.getPieceColourWithCoords(curi - x, curj - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi + x, curj + x) != piececolour)
+                    {
+                        possiblemoves.Add((x, x));
+                        if (dictionaries.getPieceColourWithCoords(curi + x, curj + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi + x, curj - x) != piececolour)
+                    {
+                        possiblemoves.Add((x, -x));
+                        if (dictionaries.getPieceColourWithCoords(curi + x, curj - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                if (possiblemoves.Contains(attemptedmove))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             return viable;
         }
         private string Currentlyselected
