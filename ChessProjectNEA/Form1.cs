@@ -431,6 +431,106 @@ namespace ChessProjectNEA
                     return false;
                 }
             }
+            else if (pieceabbrev=="BQ" || pieceabbrev=="WQ")
+            {
+                List<(int, int)> possiblemoves = new List<(int, int)>();
+                int upwardsmax = Math.Abs(0 - curj) + 1;
+                int downwardsmax = Math.Abs(7 - curj) + 1;
+                int leftmax = Math.Abs(0 - curi) + 1;
+                int rightmax = Math.Abs(7 - curi) + 1;
+                #region rookcodewithinqueen
+                for (int x = 1; x < upwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi, curj - x) != piececolour)
+                    {
+                        possiblemoves.Add((0, -x));
+                        if (dictionaries.getPieceColourWithCoords(curi, curj - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < downwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi, curj + x) != piececolour)
+                    {
+                        possiblemoves.Add((0, x));
+                        if (dictionaries.getPieceColourWithCoords(curi, curj + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi - x, curj) != piececolour)
+                    {
+                        possiblemoves.Add((-x, 0));
+                        if (dictionaries.getPieceColourWithCoords(curi - x, curj) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(curi + x, curj) != piececolour)
+                    {
+                        possiblemoves.Add((x, 0));
+                        if (dictionaries.getPieceColourWithCoords(curi + x, curj) != "") { break; }
+                    }
+                    else { break; }
+                }
+                #endregion rook
+                #region bishopcodewithinqueen
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi - x, curj + x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, x));
+                        if (dictionaries.getPieceColourWithCoords(curi - x, curj + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi - x, curj - x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, -x));
+                        if (dictionaries.getPieceColourWithCoords(curi - x, curj - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi + x, curj + x) != piececolour)
+                    {
+                        possiblemoves.Add((x, x));
+                        if (dictionaries.getPieceColourWithCoords(curi + x, curj + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(curi + x, curj - x) != piececolour)
+                    {
+                        possiblemoves.Add((x, -x));
+                        if (dictionaries.getPieceColourWithCoords(curi + x, curj - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                #endregion
+                if (possiblemoves.Contains(attemptedmove))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
             return viable;
         }
         private string Currentlyselected
@@ -611,6 +711,99 @@ namespace ChessProjectNEA
                     }
                     else { break; }
                 }
+
+            }
+            else if (piecename=="whitequeen" || piecename=="blackqueen")
+            {
+                int upwardsmax = Math.Abs(0 - j) + 1;
+                int downwardsmax = Math.Abs(7 - j) + 1;
+                int leftmax = Math.Abs(0 - i) + 1;
+                int rightmax = Math.Abs(7 - i) + 1;
+                #region rookcodewithinqueen
+                for (int x = 1; x < upwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i, j - x) != piececolour)
+                    {
+                        possiblemoves.Add((0, -x));
+                        if (dictionaries.getPieceColourWithCoords(i, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < downwardsmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i, j + x) != piececolour)
+                    {
+                        possiblemoves.Add((0, x));
+                        if (dictionaries.getPieceColourWithCoords(i, j + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i - x, j) != piececolour)
+                    {
+                        possiblemoves.Add((-x, 0));
+                        if (dictionaries.getPieceColourWithCoords(i - x, j) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    if (dictionaries.getPieceColourWithCoords(i + x, j) != piececolour)
+                    {
+                        possiblemoves.Add((x, 0));
+                        if (dictionaries.getPieceColourWithCoords(i + x, j) != "") { break; }
+                    }
+                    else { break; }
+                }
+                #endregion
+                #region bishopcodewithinqueen
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i - x, j + x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, x));
+                        if (dictionaries.getPieceColourWithCoords(i - x, j + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < leftmax; x++)
+                {
+                    //This loop is for left and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i - x, j - x) != piececolour)
+                    {
+                        possiblemoves.Add((-x, -x));
+                        if (dictionaries.getPieceColourWithCoords(i - x, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                for (int x = 1; x < rightmax; x++)
+                {
+                    //This loop is for right and down
+                    if (x == downwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i + x, j + x) != piececolour)
+                    {
+                        possiblemoves.Add((x, x));
+                        if (dictionaries.getPieceColourWithCoords(i + x, j + x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                //This code has a bug. [Patched]
+                for (int x = 1; x < rightmax; x++)//This was set to leftmax not rightmax. This was the entire bug. This is now fixed.
+                {
+                    //This loop is for right and up
+                    if (x == upwardsmax) { break; }
+                    if (dictionaries.getPieceColourWithCoords(i + x, j - x) != piececolour)
+                    {
+                        possiblemoves.Add((x, -x));
+                        if (dictionaries.getPieceColourWithCoords(i + x, j - x) != "") { break; }
+                    }
+                    else { break; }
+                }
+                #endregion
 
             }
             highlight_poss(possiblemoves, coordstring);
