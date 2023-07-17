@@ -15,6 +15,7 @@ namespace ChessProjectNEA
         private string colour;
         private string currentlyselected;
         private string turn;
+        private Color highlightedpieces;
         Dictionaries dictionaries = new Dictionaries();
 
         public ChessForm()
@@ -610,8 +611,8 @@ namespace ChessProjectNEA
                 string possiblemove = newi.ToString() + newj.ToString();
                 if (dictionaries.getPieceColourWithCoordString(possiblemove) != dictionaries.getPieceColourWithCoordString(Currentlyselected))
                 {
-                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = Color.BlueViolet;
-                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor = Color.BlueViolet;
+                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).BackColor = highlightedpieces;
+                    ((Button)Controls.Find("Button" + possiblemove, true)[0]).FlatAppearance.MouseOverBackColor = highlightedpieces;
                 }
             }
         }
@@ -911,6 +912,7 @@ namespace ChessProjectNEA
             else { colour = "black"; }
             currentlyselected = "";
             turn = "white";
+            highlightedpieces = Color.MediumPurple;
             #region createbuttons
             for (int i = 0; i < 8; i++)
             {
