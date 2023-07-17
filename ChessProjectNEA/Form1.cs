@@ -14,6 +14,7 @@ namespace ChessProjectNEA
     {
         private string colour;
         private string currentlyselected;
+        private string turn;
         Dictionaries dictionaries = new Dictionaries();
 
         public ChessForm()
@@ -165,6 +166,7 @@ namespace ChessProjectNEA
             //MessageBox.Show(piecename);
             if (piecename!="" && Currentlyselected=="")
             {
+                if (piececolour!=Turn) { return; }
                 //MessageBox.Show("You selected " + piecename +".");
                 Currentlyselected = coordstring;
                 btn.BackColor = Color.Blue;
@@ -192,6 +194,7 @@ namespace ChessProjectNEA
                     if (moveisviable)
                     {
                         move(i, j);
+                        if (Turn == "white") { Turn = "black"; } else { Turn = "white"; }
                     } else
                     {
                         Currentlyselected = "";
@@ -205,6 +208,7 @@ namespace ChessProjectNEA
                 if (Viable(coordstring))
                 {
                     move(i, j);
+                    if (Turn=="white") { Turn = "black"; } else { Turn = "white"; }
                 } else
                 {
                     Button button = (Button)Controls.Find("Button" + Currentlyselected, true)[0];
@@ -583,7 +587,17 @@ namespace ChessProjectNEA
             get { return currentlyselected; }
             set { currentlyselected = value; }
         }
-
+        private string Turn
+        {
+            get { return turn; }
+            set
+            {
+                if (value=="white" || value=="black")
+                {
+                    turn = value;
+                }
+            }
+        }
         private void highlight_poss(List<(int i, int j)> possiblemoves, string coordstring)
         {
             int currenti = (int)char.GetNumericValue(coordstring[0]);
@@ -896,6 +910,8 @@ namespace ChessProjectNEA
             if (num==0) { colour = "white"; }
             else { colour = "black"; }
             currentlyselected = "";
+            turn = "white";
+            #region createbuttons
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
@@ -913,6 +929,7 @@ namespace ChessProjectNEA
                     Controls.Add(b);
                 }
             }
+            #endregion
             initializeDict();
             setImages();
             initializeButtonConfig();
