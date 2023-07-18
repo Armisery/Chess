@@ -16,6 +16,7 @@ namespace ChessProjectNEA
         private string currentlyselected;
         private string turn;
         private Color highlightedpieces;
+        private Color backcolour;
         Dictionaries dictionaries = new Dictionaries();
 
         public ChessForm()
@@ -170,8 +171,8 @@ namespace ChessProjectNEA
                 if (piececolour!=Turn) { return; }
                 //MessageBox.Show("You selected " + piecename +".");
                 Currentlyselected = coordstring;
-                btn.BackColor = Color.Blue;
-                btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+                btn.BackColor = backcolour;
+                btn.FlatAppearance.MouseOverBackColor = backcolour;
                 pieceselected(piecename, coordstring);
             } else if (piecename!=""&&Currentlyselected!="")
             {
@@ -181,8 +182,8 @@ namespace ChessProjectNEA
                     ((Button)Controls.Find("Button" + Currentlyselected, true)[0]).BackColor = Color.Transparent;
                     ((Button)Controls.Find("Button" + Currentlyselected, true)[0]).FlatAppearance.MouseOverBackColor = Color.Transparent;
                     Currentlyselected = coordstring;
-                    btn.BackColor = Color.Blue;
-                    btn.FlatAppearance.MouseOverBackColor = Color.Blue;
+                    btn.BackColor = backcolour;
+                    btn.FlatAppearance.MouseOverBackColor = backcolour;
                     pieceselected(piecename, coordstring);
                 } else
                 {
@@ -912,7 +913,8 @@ namespace ChessProjectNEA
             else { colour = "black"; }
             currentlyselected = "";
             turn = "white";
-            highlightedpieces = Color.MediumPurple;
+            highlightedpieces = Color.FromArgb(150,Color.ForestGreen);
+            backcolour = Color.ForestGreen;
             #region createbuttons
             for (int i = 0; i < 8; i++)
             {
