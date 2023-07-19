@@ -124,6 +124,9 @@
   <data name="blackking" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\black-king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="blackkingincheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\black-king-in-check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="blackknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\black-horse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -144,6 +147,9 @@
   </data>
   <data name="whiteking" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white-king.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="whitekingincheck" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\white-king-in-check.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="whiteknight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\white-horse.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

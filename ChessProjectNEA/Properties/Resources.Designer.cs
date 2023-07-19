@@ -83,6 +83,16 @@ namespace ChessProjectNEA.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap blackkingincheck {
+            get {
+                object obj = ResourceManager.GetObject("blackkingincheck", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap blackknight {
             get {
                 object obj = ResourceManager.GetObject("blackknight", resourceCulture);
@@ -146,6 +156,16 @@ namespace ChessProjectNEA.Properties {
         internal static System.Drawing.Bitmap whiteking {
             get {
                 object obj = ResourceManager.GetObject("whiteking", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap whitekingincheck {
+            get {
+                object obj = ResourceManager.GetObject("whitekingincheck", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

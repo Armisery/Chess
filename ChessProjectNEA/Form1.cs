@@ -17,6 +17,8 @@ namespace ChessProjectNEA
         private string turn;
         private Color highlightedpieces;
         private Color backcolour;
+        private bool whitekingincheck;
+        private bool blackkingincheck;
         Dictionaries dictionaries = new Dictionaries();
 
         public ChessForm()
@@ -113,6 +115,8 @@ namespace ChessProjectNEA
                     string coordstring = i.ToString() + j.ToString();
                     if (piecename != "")
                     {
+                        if (piecename=="whiteking"&& whitekingincheck) { piecename = "whitekingincheck"; }
+                        if (piecename=="blackking"&& blackkingincheck) { piecename = "blackkingincheck"; }
                         object obj = Properties.Resources.ResourceManager.GetObject(piecename);
                         Image image = (Bitmap)obj;
                         ((Button)Controls.Find("Button" + coordstring, true)[0]).Image = image;
@@ -188,7 +192,7 @@ namespace ChessProjectNEA
                 } else
                 {
                     //Trying to take a piece. Check if move is viable.
-                    bool moveisviable = Viable(coordstring);
+                    bool moveisviable = Viable(coordstring, Currentlyselected);
                     //MessageBox.Show(moveisviable.ToString());
                     Button button = (Button)Controls.Find("Button" + Currentlyselected, true)[0];
                     button.BackColor = Color.Transparent;
@@ -207,7 +211,7 @@ namespace ChessProjectNEA
             } else if (piecename == "" && Currentlyselected != "")
             {
                 //Selected a blank button, but already got a piece selected. Check if move can be done
-                if (Viable(coordstring))
+                if (Viable(coordstring,Currentlyselected))
                 {
                     move(i, j);
                     if (Turn=="white") { Turn = "black"; } else { Turn = "white"; }
@@ -230,18 +234,19 @@ namespace ChessProjectNEA
             int currentlyj = (int)char.GetNumericValue(Currentlyselected[1]);
             Currentlyselected = "";
             dictionaries.setBoard(currentlyi, currentlyj, "");
+            check();
             setImages();
             clearUnselected();
         }
-        private bool Viable(string coordstring)
+        private bool Viable(string coordstring, string curselected)
         {
-            bool viable = true;
-            string pieceabbrev = dictionaries.getPieceAbbrevWithCoordString(Currentlyselected);
-            string piececolour = dictionaries.getPieceColourWithCoordString(Currentlyselected);
+            bool viable = false;
+            string pieceabbrev = dictionaries.getPieceAbbrevWithCoordString(curselected);
+            string piececolour = dictionaries.getPieceColourWithCoordString(curselected);
             int i = (int)char.GetNumericValue(coordstring[0]);
             int j = (int)char.GetNumericValue(coordstring[1]);
-            int curi = (int)char.GetNumericValue(Currentlyselected[0]);
-            int curj = (int)char.GetNumericValue(Currentlyselected[1]);
+            int curi = (int)char.GetNumericValue(curselected[0]);
+            int curj = (int)char.GetNumericValue(curselected[1]);
             int idiff = Math.Abs(curi-i);
             int jdiff = Math.Abs(curj-j);
             (int i, int j) attemptedmove = (i-curi, j-curj);
@@ -905,6 +910,34 @@ namespace ChessProjectNEA
             highlight_poss(possiblemoves, coordstring);
         }
 
+        private void check()
+        {
+            string whitekingcoord = dictionaries.findIndex("WK");
+            string blackkingcoord = dictionaries.findIndex("BK");
+            int whitecounter = 0; 
+            int blackcounter = 0;
+            for (int i = 0; i < 8; i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    var curcord = i.ToString() + j.ToString();
+                    if (Viable(whitekingcoord, curcord)) { 
+                        whitekingincheck = true; 
+                        whitecounter++;
+                        break; 
+                    }
+                    if (Viable(blackkingcoord, curcord)) { 
+                        blackkingincheck = true;
+                        blackcounter++;
+                        break; 
+                    }
+
+                }
+            }
+            if (whitecounter==0) { whitekingincheck = false; }
+            if (blackcounter==0) { blackkingincheck = false; }
+        }
+
         private void ChessForm_Load(object sender, EventArgs e)
         {
             Random rnd = new Random();
@@ -915,6 +948,8 @@ namespace ChessProjectNEA
             turn = "white";
             highlightedpieces = Color.FromArgb(150,Color.ForestGreen);
             backcolour = Color.ForestGreen;
+            whitekingincheck = false;
+            blackkingincheck = false;
             #region createbuttons
             for (int i = 0; i < 8; i++)
             {

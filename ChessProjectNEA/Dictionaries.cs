@@ -121,5 +121,18 @@ namespace ChessProjectNEA
             }
             return Board[(x, y)];
         }
+        public string findIndex(string pieceabbrev)
+        {
+            string coordstring = "";
+            for (int i = 0; i<8;i++)
+            {
+                for (int j = 0; j < 8; j++)
+                {
+                    var curpiece = getBoard(i, j);
+                    if (curpiece==pieceabbrev) { return i.ToString() + j.ToString(); }
+                }
+            }
+            return coordstring;
+        }
     }
 }
