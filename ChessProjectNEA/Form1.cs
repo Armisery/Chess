@@ -294,7 +294,16 @@ namespace ChessProjectNEA
                         else if (jdiff == -2)
                         {
                             if (idiff != 0) { return false; }
-                            if (curj==1) { return true; }
+                            if (curj==1) {
+                                if (dictionaries.getPieceWithCoords(curi, curj + 1) == "" && dictionaries.getPieceWithCoords(curi, curj + 2) == "")
+                                {
+                                    return true;
+                                }
+                                else
+                                {
+                                    return false;
+                                }
+                            }
                             else { return false; }
                         }
                         else
@@ -321,7 +330,13 @@ namespace ChessProjectNEA
                         {
                             if (curj==6)
                             {
-                                return true;
+                                if (dictionaries.getPieceWithCoords(curi,curj-1)=="" && dictionaries.getPieceWithCoords(curi,curj-2)=="")
+                                {
+                                    return true;
+                                } else
+                                {
+                                    return false;
+                                }
                             }
                             else
                             {
@@ -656,7 +671,12 @@ namespace ChessProjectNEA
             {
                 if (piececolour!=colour)
                 {
-                    if (j==1) { possiblemoves.Add((0,2)); }
+                    if (j==1) {
+                        if (dictionaries.getPieceWithCoords(i, j + 1) == "" && dictionaries.getPieceWithCoords(i, j + 2) == "")
+                        {
+                            possiblemoves.Add((0, 2));
+                        }
+                    }
                     if (j < 7)
                     {
                         if (dictionaries.getPieceWithCoords(i, j + 1) == "") { possiblemoves.Add((0, 1)); }
@@ -672,7 +692,13 @@ namespace ChessProjectNEA
                 } 
                 else
                 {
-                    if (j==6) { possiblemoves.Add((0, -2)); }
+                    if (j == 6)
+                    {
+                        if (dictionaries.getPieceWithCoords(i, j - 1) == "" && dictionaries.getPieceWithCoords(i, j - 2) == "")
+                        {
+                            possiblemoves.Add((0, -2));
+                        }
+                    }
                     if (j>0)
                     {
                         if (dictionaries.getPieceWithCoords(i,j-1)=="") { possiblemoves.Add((0, -1)); }
