@@ -19,6 +19,7 @@ namespace ChessProjectNEA
         private Color backcolour;
         private bool whitekingincheck;
         private bool blackkingincheck;
+        private string winner;
         Dictionaries dictionaries = new Dictionaries();
 
         public ChessForm()
@@ -161,6 +162,7 @@ namespace ChessProjectNEA
         private void NewButton_Click(object sender, EventArgs e)
         {
             clearUnselected();
+            if (Winner!=null) { return; }
             Button btn = (Button)sender;
             string name = btn.Name;
             string coordstring = name.Substring(6);
@@ -237,6 +239,7 @@ namespace ChessProjectNEA
             check();
             setImages();
             clearUnselected();
+            if (Winner!=null) { MessageBox.Show(Winner + " has won the game!"); }
         }
         private bool Viable(string coordstring, string curselected)
         {
@@ -620,6 +623,17 @@ namespace ChessProjectNEA
                 }
             }
         }
+        private string Winner
+        {
+            get { return winner; }
+            set
+            {
+                if (value=="white" || value=="black")
+                {
+                    winner = value;
+                }
+            }
+        }
         private void highlight_poss(List<(int i, int j)> possiblemoves, string coordstring)
         {
             int currenti = (int)char.GetNumericValue(coordstring[0]);
@@ -940,24 +954,38 @@ namespace ChessProjectNEA
         {
             string whitekingcoord = dictionaries.findIndex("WK");
             string blackkingcoord = dictionaries.findIndex("BK");
+            if (whitekingcoord=="") {
+                Winner = "black";
+                return;
+            }
+            if (blackkingcoord=="") {
+                Winner = "white";
+                return;
+            }
             int whitecounter = 0; 
             int blackcounter = 0;
+            
             for (int i = 0; i < 8; i++)
             {
                 for (int j = 0; j < 8; j++)
                 {
                     var curcord = i.ToString() + j.ToString();
-                    if (Viable(whitekingcoord, curcord)) { 
-                        whitekingincheck = true; 
-                        whitecounter++;
-                        break; 
+                    if (Viable(whitekingcoord, curcord)) {
+                        if (dictionaries.getPieceColourWithCoords(i, j) != "white")
+                        {
+                            whitekingincheck = true;
+                            whitecounter++;
+                            break;
+                        }
                     }
-                    if (Viable(blackkingcoord, curcord)) { 
-                        blackkingincheck = true;
-                        blackcounter++;
-                        break; 
+                    if (Viable(blackkingcoord, curcord)) {
+                        if (dictionaries.getPieceColourWithCoords(i, j) == "white")
+                        {
+                            blackkingincheck = true;
+                            blackcounter++;
+                            break;
+                        }
                     }
-
                 }
             }
             if (whitecounter==0) { whitekingincheck = false; }
