@@ -276,6 +276,7 @@ namespace ChessProjectNEA
                 //MessageBox.Show(curi.ToString() + curj.ToString());
                 idiff = curi - i;
                 jdiff = curj - j;
+                //MessageBox.Show(idiff.ToString() + " " + jdiff.ToString());
                 if (piececolour != colour)
                 {
                     if (jdiff < 0)
@@ -314,7 +315,10 @@ namespace ChessProjectNEA
                             return false;
                         }
                     }
-                    else { return false; }
+                    else {
+                        //MessageBox.Show("Jdiff aint less than 0 bud");
+                        return false; 
+                    }
                 }
                 else
                 {
@@ -326,7 +330,19 @@ namespace ChessProjectNEA
                     }
                     else
                     {
-                        if (jdiff == 1) { return true; }
+                        if (idiff==0&&jdiff==-1)
+                        {
+                            if (dictionaries.getPieceWithCoords(curi,curj-1)!="")
+                            {
+                                return false;
+                            }
+                        }
+                        if (jdiff == 1) {
+                            if (dictionaries.getPieceWithCoords(curi,curj-1)!="") {
+                                return false; 
+                            }
+                            return true;
+                        }
                         if (jdiff < 0) { return false; }
                         if (jdiff>2) { return false; }
                         if (jdiff==2)
